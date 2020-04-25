@@ -1,0 +1,47 @@
+.title {
+  text-align: center;
+  font-size: 30px;
+  color: #f9f6f3;
+}
+
+.movie-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.movie {
+  width: 20%;
+  margin: 5px;
+  border: 2px solid #f9f6f3;
+}
+
+.movie-title {
+  font-size: 16px;
+  color: #f9f6f3;
+  text-align: center;
+  padding: 5px;
+}
+
+.icon-container {
+  overflow: hidden;
+}
+
+.mv-icon {
+  float: right;
+  color: #90cea1;
+  padding: 5px;
+  font-size: 30px;
+}
+
+@media screen and (max-width: 1100px) {
+
+}
+
+@media screen and (max-width: 900px) {
+
+}
+
+@media screen and (max-width: 600px) {
+
+}
