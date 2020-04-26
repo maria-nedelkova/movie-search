@@ -1,6 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faClock, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
 
 class Movie extends React.Component {
   constructor(props) {
@@ -11,13 +11,34 @@ class Movie extends React.Component {
 
 
   render(){
-    const {title} = this.props
+    const {id, title, highlightButton} = this.props
+    let animationFav, animationWlater
+
+    if(highlightButton) {
+      if(highlightButton == 'addToFavorites'){
+        animationFav = {animationName: 'highlight'}
+        animationWlater = {}
+      } else {
+        animationWlater = {animationName: 'highlight'}
+        animationFav = {}
+      }
+    } else {
+      animationFav = {}
+      animationWlater = {}
+    }
+
     return (
       <div className="movie">
         <div className="movie-title">{title}</div>
         <div className="icon-container">
-          <FontAwesomeIcon icon={faTrash} className="mv-icon"/>
-          <FontAwesomeIcon icon={faCheck} className="mv-icon"/>
+          <FontAwesomeIcon icon={faClock}
+                           className="mv-icon"
+                           style={animationWlater}
+                           onClick={() => {this.props.addtoWatchLater(id)}}/>
+          <FontAwesomeIcon icon={faThumbsUp}
+                           className="mv-icon"
+                           style={animationFav}
+                           onClick={() => {this.props.addToFavorites(id)}}/>
         </div>
       </div>
     );

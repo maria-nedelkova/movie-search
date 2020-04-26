@@ -32,6 +32,14 @@
   color: #90cea1;
   padding: 5px;
   font-size: 30px;
+  animation-duration: 1.5s;
+  cursor: pointer;
+}
+
+@keyframes highlight {
+  0% {color: #90cea1;}
+  50% {color: #08da41;}
+  100% {color: #90cea1;}
 }
 
 @media screen and (max-width: 1100px) {

@@ -3,8 +3,13 @@ const token_endpoint = 'https://api.themoviedb.org/3/authentication/token/new?ap
 const session_endpoint = 'https://api.themoviedb.org/3/authentication/session/new?api_key='
 const authenticate_endpoint = 'https://www.themoviedb.org/authenticate/'
 const top_rated_endpoint = 'https://api.themoviedb.org/3/movie/top_rated?api_key='
+const search_movie_endpoint = 'https://api.themoviedb.org/3/search/movie?api_key='
+const mark_as_fav_endpoint = 'https://api.themoviedb.org/3/account/{account_id}/favorite?api_key='
+const get_favorites_endpoint = 'https://api.themoviedb.org/3/account/{account_id}/favorite/movies?api_key='
+const add_to_watchlist_endpoint = 'https://api.themoviedb.org/3/account/{account_id}/watchlist?api_key='
+const get_watchlist_endpoint = 'https://api.themoviedb.org/3/account/{account_id}/watchlist/movies?api_key='
 const redirect_to = '?redirect_to='
-const public_url = 'http://f78b0072.ngrok.io'
+const public_url = 'http://3f9fc0a1.ngrok.io'
 
 const checkStatus = response => {
   if (response.status >= 200 && response.status < 300) {
@@ -53,27 +58,75 @@ const getSessionId = request_token => {
       const sessionIdExpInMs = timeInMs + (1000 * 60 * 60)
       const sessionIdExp = new Date(sessionIdExpInMs)
       localStorage.setItem('sessionExp', sessionIdExp.toString())
-      console.log(localStorage.sessionId)
     }).catch(error => {
       console.log('request failed', error)
     })
 }
 
-const getTopRatedMovies = () => {
-   return fetch(top_rated_endpoint + api_key)
+const getMovies = endpoint => {
+  return fetch(endpoint)
+   .then(response => checkStatus(response))
+   .then(response => parseJSON(response))
+   .then(data => {
+     return data.results.map(movie => {
+       return {
+                id: movie.id,
+                title: movie.title,
+                posterPath: movie.poster_path
+              }
+     })
+   }).catch(error => {
+     console.log('request failed', error)
+   })
+}
+
+const getTopRatedMovies = page => {
+   return getMovies(top_rated_endpoint + api_key + '&page=' + page)
+}
+
+const searchMovies = (searchValue, page) => {
+  return getMovies(search_movie_endpoint + api_key + '&query=' + searchValue + '&page=' + page)
+}
+
+const getFavorites = (sessionId, page) => {
+  return getMovies(get_favorites_endpoint + api_key + '&session_id=' + sessionId + '&page=' + page)
+}
+
+const getWatchList = (sessionId, page) => {
+  return getMovies(get_watchlist_endpoint + api_key + '&session_id=' + sessionId + '&page=' + page)
+}
+
+const postData = (endpoint, body) => {
+  fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify(body),
+    })
     .then(response => checkStatus(response))
-    .then(response => parseJSON(response))
-    .then(data => {
-      return data.results.map(movie => {
-        return {
-                 id: movie.id,
-                 title: movie.original_title,
-                 posterPath: movie.poster_path
-               }
-      })
-    }).catch(error => {
+    .catch(error => {
       console.log('request failed', error)
     })
 }
 
-export {getTopRatedMovies, authenticate, getSessionId}
+const markAsFavorite = (sessionId, movieId) => {
+  const body = {
+    media_type: "movie",
+    media_id: movieId,
+    favorite: true
+  }
+  postData(mark_as_fav_endpoint + api_key + '&session_id=' + sessionId, body)
+}
+
+const addToWatchList = (sessionId, movieId) => {
+  const body = {
+    media_type: "movie",
+    media_id: movieId,
+    watchlist: true
+  }
+  postData(add_to_watchlist_endpoint + api_key + '&session_id=' + sessionId, body)
+}
+
+
+export {getTopRatedMovies, authenticate, getSessionId, searchMovies, markAsFavorite, getFavorites, addToWatchList, getWatchList}
