@@ -235,6 +235,7 @@ class App extends React.Component {
         <Movie key = {movie.id + index.toString()}
                id = {movie.id}
                title = {movie.title}
+               posterPath = {movie.posterPath}
                highlightButton = {highlightButton}
                addToFavorites = {(id) => {this.addToFavorites(id)}}
                addtoWatchLater = {(id) => {this.addToWatchLater(id)}}

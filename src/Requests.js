@@ -68,6 +68,7 @@ const getSessionId = request_token => {
       const sessionIdExpInMs = timeInMs + (1000 * 60 * 60)
       const sessionIdExp = new Date(sessionIdExpInMs)
       localStorage.setItem('sessionExp', sessionIdExp.toString())
+      return data.session_id
     }).catch(error => {
       console.log('request failed', error)
     })

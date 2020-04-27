@@ -16,7 +16,7 @@ const isRequestTokenValid = () => {
   }
 }
 
-const showFailureAlert = () => {
+const showFailureAlert = error => {
   Swal.fire({
     icon: 'error',
     title: 'Oops...',
@@ -36,13 +36,14 @@ if(localStorage.requestToken) {
         renderApp()
       } else {
         getSessionId(localStorage.requestToken)
-          .then(renderApp())
-          .catch(showFailureAlert())
+         .then(() => {renderApp()})
+         .catch((error) => {showFailureAlert(error)})
+
       }
     } else {
       getSessionId(localStorage.requestToken)
-        .then(renderApp())
-        .catch(showFailureAlert())
+       .then(() => {renderApp()})
+       .catch((error) => {showFailureAlert(error)})
     }
   } else {
     authenticate()
@@ -50,5 +51,3 @@ if(localStorage.requestToken) {
 } else {
   authenticate()
 }
-
-//localStorage.clear();

@@ -14,6 +14,8 @@
   width: 20%;
   margin: 5px;
   border: 2px solid #f9f6f3;
+  display: flex;
+  flex-direction: column;
 }
 
 .movie-title {
@@ -23,8 +25,14 @@
   padding: 5px;
 }
 
+.poster {
+  align-self: center;
+  width: 200px;
+}
+
 .icon-container {
   overflow: hidden;
+  margin-top: auto;
 }
 
 .mv-icon {
@@ -43,13 +51,19 @@
 }
 
 @media screen and (max-width: 1100px) {
-
+  .movie {
+    width: 25%;
+  }
 }
 
 @media screen and (max-width: 900px) {
-
+  .movie {
+    width: 33%;
+  }
 }
 
 @media screen and (max-width: 600px) {
-
+  .movie {
+    width: 70%;
+  }
 }
