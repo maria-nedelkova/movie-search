@@ -41,15 +41,7 @@ class App extends React.Component {
 
   handleSearchClick() {
     if(this.state.searchVisible){
-      getTopRatedMovies(this.initialPage)
-       .then(topRatedMovies => {
-         this.setState({
-           movies: topRatedMovies,
-           title: 'Top Rated Movies',
-           lastRequest: 'getTopRatedMovies',
-           page: this.initialPage
-         });
-       })
+      this.showTopRated()
       this.setState({
         searchVisible: false
       });
@@ -121,6 +113,21 @@ class App extends React.Component {
     });
   }
 
+  showTopRated() {
+    getTopRatedMovies(this.initialPage)
+     .then(topRatedMovies => {
+       this.setState({
+         movies: topRatedMovies,
+         title: 'Top Rated Movies',
+         lastRequest: 'getTopRatedMovies',
+         page: this.initialPage
+       });
+     })
+     this.setState({
+       dropDownVisible: false
+     });
+  }
+
   showFavorites() {
     getFavorites(this.state.sessionId, this.initialPage)
      .then(favorites => {
@@ -159,7 +166,7 @@ class App extends React.Component {
     const requests = {
       getTopRatedMovies: () => {
         getTopRatedMovies(nextPage)
-         .then(topRatedMovies => {           
+         .then(topRatedMovies => {
            this.setState({
              movies: [...this.state.movies, ...topRatedMovies],
              title: 'Top Rated Movies',
@@ -211,14 +218,14 @@ class App extends React.Component {
 
   renderMovies() {
     let highlightButton = ''
-    const movies = this.state.movies.map(movie => {
+    const movies = this.state.movies.map((movie, index) => {
       if(movie.id == this.state.highlight.movieId) {
         highlightButton = this.state.highlight.buttonType
       } else {
         highlightButton = ''
       }
       return (
-        <Movie key = {movie.id}
+        <Movie key = {movie.id + index.toString()}
                id = {movie.id}
                title = {movie.title}
                highlightButton = {highlightButton}
@@ -268,6 +275,7 @@ class App extends React.Component {
             <FontAwesomeIcon icon={faSearch} className="search-icon"/>
           </div>
           <div className={dropDownClassName}>
+            <a onClick={() => {this.showTopRated()}}>Top rated</a>
             <a onClick={() => {this.showFavorites()}}>Favorites</a>
             <a onClick={() => {this.showWatchList()}}>Watch later</a>
           </div>
@@ -291,15 +299,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    getTopRatedMovies(this.initialPage)
-     .then(topRatedMovies => {
-       this.setState({
-         movies: topRatedMovies,
-         title: 'Top Rated Movies',
-         lastRequest: 'getTopRatedMovies',
-         page: this.initialPage
-       });
-     })
+    this.showTopRated()
   }
 
 }
