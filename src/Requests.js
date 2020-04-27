@@ -25,6 +25,16 @@ const parseJSON = response => {
   return response.json()
 }
 
+const isSessionIdValid = () => {
+  const currentTime = new Date()
+  const sessionExp = new Date(localStorage.sessionExp)
+  if(currentTime.getTime() > sessionExp.getTime()) {
+    return false
+  } else {
+    return true
+  }
+}
+
 const authenticate = () => {
   fetch(token_endpoint + api_key)
     .then(response => checkStatus(response))
@@ -42,7 +52,7 @@ const authenticate = () => {
 }
 
 const getSessionId = request_token => {
-  fetch(session_endpoint + api_key, {
+  return fetch(session_endpoint + api_key, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -85,15 +95,30 @@ const getTopRatedMovies = page => {
 }
 
 const searchMovies = (searchValue, page) => {
-  return getMovies(search_movie_endpoint + api_key + '&query=' + searchValue + '&page=' + page)
+  return getMovies(search_movie_endpoint +
+                   api_key + '&query=' +
+                   searchValue + '&page=' + page)
 }
 
-const getFavorites = (sessionId, page) => {
-  return getMovies(get_favorites_endpoint + api_key + '&session_id=' + sessionId + '&page=' + page)
+const getFavorites = page => {
+  if (isSessionIdValid()) {
+    return getMovies(get_favorites_endpoint +
+                     api_key + '&session_id=' +
+                     localStorage.sessionId + '&page=' + page)
+  } else {
+    authenticate()
+  }
+
 }
 
-const getWatchList = (sessionId, page) => {
-  return getMovies(get_watchlist_endpoint + api_key + '&session_id=' + sessionId + '&page=' + page)
+const getWatchList = page => {
+  if (isSessionIdValid()) {
+    return getMovies(get_watchlist_endpoint +
+                     api_key + '&session_id=' +
+                     localStorage.sessionId + '&page=' + page)
+  } else {
+    authenticate()
+  }
 }
 
 const postData = (endpoint, body) => {
@@ -110,23 +135,39 @@ const postData = (endpoint, body) => {
     })
 }
 
-const markAsFavorite = (sessionId, movieId) => {
+const markAsFavorite = movieId => {
   const body = {
     media_type: "movie",
     media_id: movieId,
     favorite: true
   }
-  postData(mark_as_fav_endpoint + api_key + '&session_id=' + sessionId, body)
+  if (isSessionIdValid()) {
+    postData(mark_as_fav_endpoint +
+             api_key + '&session_id=' +
+             localStorage.sessionId, body)
+  } else {
+    authenticate()
+  }
 }
 
-const addToWatchList = (sessionId, movieId) => {
+const addToWatchList = movieId => {
   const body = {
     media_type: "movie",
     media_id: movieId,
     watchlist: true
   }
-  postData(add_to_watchlist_endpoint + api_key + '&session_id=' + sessionId, body)
+  if (isSessionIdValid()) {
+    postData(add_to_watchlist_endpoint +
+             api_key + '&session_id=' +
+             localStorage.sessionId, body)
+  } else {
+    authenticate()
+  }
 }
 
 
-export {getTopRatedMovies, authenticate, getSessionId, searchMovies, markAsFavorite, getFavorites, addToWatchList, getWatchList}
+export {
+        getTopRatedMovies, authenticate, getSessionId,
+        searchMovies, markAsFavorite, getFavorites,
+        addToWatchList, getWatchList, isSessionIdValid
+      }

@@ -10,7 +10,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sessionId: this.props.sessionId,
       movies: [],
       title: '',
       dropDownVisible: false,
@@ -94,7 +93,7 @@ class App extends React.Component {
    }
 
   addToFavorites(id) {
-    markAsFavorite(this.state.sessionId, id)
+    markAsFavorite(id)
     this.setState({
       highlight: {
         movieId: id,
@@ -104,7 +103,7 @@ class App extends React.Component {
   }
 
   addToWatchLater(id) {
-    addToWatchList(this.state.sessionId, id)
+    addToWatchList(id)
     this.setState({
       highlight: {
         movieId: id,
@@ -129,7 +128,7 @@ class App extends React.Component {
   }
 
   showFavorites() {
-    getFavorites(this.state.sessionId, this.initialPage)
+    getFavorites(this.initialPage)
      .then(favorites => {
        this.setState({
          movies: favorites,
@@ -140,12 +139,16 @@ class App extends React.Component {
      });
 
      this.setState({
-       dropDownVisible: false
+       dropDownVisible: false,
+       highlight: {
+         movieId: '',
+         buttonType: ''
+       },
      });
   }
 
   showWatchList() {
-    getWatchList(this.state.sessionId, this.initialPage)
+    getWatchList(this.initialPage)
      .then(watchList => {
        this.setState({
          movies: watchList,
@@ -156,7 +159,11 @@ class App extends React.Component {
      });
 
      this.setState({
-       dropDownVisible: false
+       dropDownVisible: false,
+       highlight: {
+         movieId: '',
+         buttonType: ''
+       },
      });
   }
 
@@ -191,7 +198,7 @@ class App extends React.Component {
         }
       },
       getFavorites: () => {
-        getFavorites(this.state.sessionId, nextPage)
+        getFavorites(nextPage)
          .then(favorites => {
            this.setState({
              movies: [...this.state.movies, ...favorites],
@@ -202,7 +209,7 @@ class App extends React.Component {
          });
       },
       getWatchList: () => {
-        getWatchList(this.state.sessionId, nextPage)
+        getWatchList(nextPage)
          .then(watchList => {
            this.setState({
              movies: [...this.state.movies, ...watchList],

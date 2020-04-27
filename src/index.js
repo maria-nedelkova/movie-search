@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {authenticate, getSessionId} from './Requests'
+import Swal from 'sweetalert2'
+import {authenticate, getSessionId, isSessionIdValid} from './Requests'
 import App from './App'
 import './MainPageIni.css'
 import './MovieStyles.css'
@@ -15,28 +16,33 @@ const isRequestTokenValid = () => {
   }
 }
 
-const isSessionIdValid = () => {
-  const currentTime = new Date()
-  const sessionExp = new Date(localStorage.sessionExp)
-  if(currentTime.getTime() > sessionExp.getTime()) {
-    return false
-  } else {
-    return true
-  }
+const showFailureAlert = () => {
+  Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    html: 'Something went wrong. Please, reload the page',
+    confirmButtonColor: '#90cea1',
+  })
+}
+
+const renderApp = () => {
+  ReactDOM.render(<App />, document.getElementById('root'))
 }
 
 if(localStorage.requestToken) {
   if(isRequestTokenValid()) {
     if(localStorage.sessionId) {
       if(isSessionIdValid()) {
-        ReactDOM.render(<App sessionId={localStorage.sessionId}/>, document.getElementById('root'));
+        renderApp()
       } else {
         getSessionId(localStorage.requestToken)
-        ReactDOM.render(<App sessionId={localStorage.sessionId}/>, document.getElementById('root'));
+          .then(renderApp())
+          .catch(showFailureAlert())
       }
     } else {
       getSessionId(localStorage.requestToken)
-      ReactDOM.render(<App sessionId={localStorage.sessionId}/>, document.getElementById('root'));
+        .then(renderApp())
+        .catch(showFailureAlert())
     }
   } else {
     authenticate()
