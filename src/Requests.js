@@ -9,7 +9,7 @@ const get_favorites_endpoint = 'https://api.themoviedb.org/3/account/{account_id
 const add_to_watchlist_endpoint = 'https://api.themoviedb.org/3/account/{account_id}/watchlist?api_key='
 const get_watchlist_endpoint = 'https://api.themoviedb.org/3/account/{account_id}/watchlist/movies?api_key='
 const redirect_to = '?redirect_to='
-const public_url = 'http://3f9fc0a1.ngrok.io'
+const public_url = 'http://87da2cee.ngrok.io'
 
 const checkStatus = response => {
   if (response.status >= 200 && response.status < 300) {
@@ -68,7 +68,6 @@ const getSessionId = request_token => {
       const sessionIdExpInMs = timeInMs + (1000 * 60 * 60)
       const sessionIdExp = new Date(sessionIdExpInMs)
       localStorage.setItem('sessionExp', sessionIdExp.toString())
-      return data.session_id
     }).catch(error => {
       console.log('request failed', error)
     })

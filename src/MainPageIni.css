@@ -133,6 +133,7 @@ body, html {
 	width: 0px;
 	position: relative;
 	top: 19px;
+	color: #0d253f;
 	border: none;
 	background-color: #0d253f;
 	padding: 6px 5px 6px 0px;
@@ -147,7 +148,7 @@ body, html {
 	background-color: #0d253f;
 	border-radius: 0;
   padding: 8px 5px 7px 0px;
-	height: 34px !important;
+	height: 35px;
 	color: #f9f6f3;
 	border-top: 2px solid #f9f6f3;
 	border-right: none;
@@ -167,6 +168,7 @@ body, html {
 	position: relative;
 	top: 19px;
 	border: none;
+	color: #01b4e4;
 	background-color: #01b4e4;
 	padding: 6px 5px 6px 0px;
 	transition: width .2s ease-in-out;
@@ -180,7 +182,7 @@ body, html {
 	background-color: #01b4e4;
 	border-radius: 0;
   padding: 8px 5px 7px 0px;
-	height: 34px !important;
+	height: 35px;
 	color: #f9f6f3;
 	border-top: 2px solid #f9f6f3;
 	border-right: none;
@@ -209,13 +211,11 @@ body, html {
 	border-left: 2px solid #f9f6f3;
 	border-bottom: 2px solid #f9f6f3;
 	pointer-events: none;
+	height: 35px;
 }
 
 .cross-container-icon {
 	display: none;
-  /*float: right;
-	position: relative;
-	top: 19px;*/
 }
 
 .cross-container-icon-expand {
@@ -226,6 +226,7 @@ body, html {
 	border-right: 2px solid #f9f6f3;
 	border-bottom: 2px solid #f9f6f3;
 	cursor: pointer;
+	height: 35px;
 }
 
 .search-icon {
@@ -317,12 +318,12 @@ body, html {
 	}
 
 .search-container-input-expand {
-	width: 150px;
+	width: 20%;
 	border-radius: 0;
 }
 
 .search-container-input-expand-blue {
-	width: 150px;
+	width: 20%;
 	border-radius: 0;
 }
 
