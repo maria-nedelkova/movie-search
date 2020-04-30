@@ -71,7 +71,7 @@ body, html {
   transition: transform .1s ease-in-out;
 }
 
-.dropdown-menu-visible a {
+.dropdown-menu-visible a, .dropdown-menu-hidden a {
   font-size: 45px;
   color: #f9f6f3;
   padding: 12px 56px;
