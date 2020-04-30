@@ -27,7 +27,7 @@ const Movie = props => {
 
     return (
       <div className="movie">
-        <div className="movie-title">{title}</div>
+        <div data-testid="movie-title" className="movie-title">{title}</div>
         {posterImage}
         <div className="icon-container">
           <FontAwesomeIcon icon={faClock}

@@ -1,9 +1,8 @@
 import React from 'react'
 import Movie from './Movie'
-import {getTopRatedMovies, searchMovies, markAsFavorite, getFavorites, addToWatchList, getWatchList} from './Requests'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEarlybirds } from '@fortawesome/free-brands-svg-icons'
 import { faTv, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
+import {getTopRatedMovies, searchMovies, markAsFavorite, getFavorites, addToWatchList, getWatchList} from './Requests'
 import logo from './tmdb_logo.svg'
 
 class App extends React.Component {
@@ -58,7 +57,7 @@ class App extends React.Component {
       searchValue: searchValue
     });
     clearTimeout(this.typingTimerSearch)
-    this.typingTimerTask = setTimeout(() => {
+    this.typingTimerSearch = setTimeout(() => {
       if(searchValue){
         const encodedValue = encodeURI(searchValue)
         searchMovies(encodedValue, this.initialPage)
@@ -259,37 +258,38 @@ class App extends React.Component {
 
     return (
       <div style={{height: '100%'}}>
-        <div className={topNavClassName}>
-          <div className="logo">
-            <FontAwesomeIcon icon={faTv} className="movie-icon"/>
-            <div className="logo-text">Movie Search</div>
-          </div>
-          <div className={barClassName} onClick={() => this.handleMenuClick()}>
-            <div className="bar1"></div>
-            <div className="bar2"></div>
-            <div className="bar3"></div>
-          </div>
-          <div className={crossIconClassName} onClick={() => this.handleSearchClick()}>
-            <FontAwesomeIcon icon={faTimes} className="search-icon"/>
-          </div>
-          <input className={searchInputClassName}
-                 value={searchValue}
-                 type="text"
-                 maxLength="30"
-                 onChange={() => {this.handleSearchValueChange(event)}}
-                 onKeyDown={() => {this.handleKeyDown(event)}}
-          />
-          <div className={searchIconClassName} onClick={() => this.handleSearchClick()}>
-            <FontAwesomeIcon icon={faSearch} className="search-icon"/>
-          </div>
-          <div className={dropDownClassName}>
-            <a onClick={() => {this.showTopRated()}}>Top rated</a>
-            <a onClick={() => {this.showFavorites()}}>Favorites</a>
-            <a onClick={() => {this.showWatchList()}}>Watch later</a>
-          </div>
+      <div className={topNavClassName}>
+        <div className="logo">
+          <FontAwesomeIcon icon={faTv} className="movie-icon"/>
+          <div className="logo-text">Movie Search</div>
+        </div>
+        <div data-testid="menu-button" className={barClassName} onClick={() => this.handleMenuClick()}>
+          <div className="bar1"></div>
+          <div className="bar2"></div>
+          <div className="bar3"></div>
+        </div>
+        <div data-testid="cross-button" className={crossIconClassName} onClick={() => this.handleSearchClick()}>
+          <FontAwesomeIcon icon={faTimes} className="search-icon"/>
+        </div>
+        <input className={searchInputClassName}
+               value={searchValue}
+               type="text"
+               maxLength="30"
+               onChange={() => {this.handleSearchValueChange(event)}}
+               onKeyDown={() => {this.handleKeyDown(event)}}
+               data-testid="search-input"
+         />
+         <div data-testid="search-button" className={searchIconClassName} onClick={() => this.handleSearchClick()}>
+           <FontAwesomeIcon icon={faSearch} className="search-icon"/>
+         </div>
+         <div data-testid="dropdown-menu" className={dropDownClassName}>
+           <a data-testid="top-rated-link" onClick={() => {this.showTopRated()}}>Top rated</a>
+           <a data-testid="favorites-link" onClick={() => {this.showFavorites()}}>Favorites</a>
+           <a data-testid="watchlist-link" onClick={() => {this.showWatchList()}}>Watch later</a>
+         </div>
         </div>
         <div className="bkground">
-          <div className="title">{title}</div>
+          <div data-testid="main-title" className="title">{title}</div>
           <div className="movie-container">
              {this.renderMovies()}
           </div>

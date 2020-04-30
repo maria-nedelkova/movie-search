@@ -9,7 +9,7 @@ const get_favorites_endpoint = 'https://api.themoviedb.org/3/account/{account_id
 const add_to_watchlist_endpoint = 'https://api.themoviedb.org/3/account/{account_id}/watchlist?api_key='
 const get_watchlist_endpoint = 'https://api.themoviedb.org/3/account/{account_id}/watchlist/movies?api_key='
 const redirect_to = '?redirect_to='
-const public_url = 'http://87da2cee.ngrok.io'
+const public_url = 'http://7c240e0b.ngrok.io'
 
 const checkStatus = response => {
   if (response.status >= 200 && response.status < 300) {
