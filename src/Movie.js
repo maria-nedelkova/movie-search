@@ -7,22 +7,14 @@ const Movie = props => {
     const imgUrl = 'https://image.tmdb.org/t/p/'
     const size = 'w200'
     const {id, title, highlightButton, posterPath} = props
-    let animationFav, animationWlater
+    let animationFav = {}, animationWlater = {}
     const imgSrc = imgUrl + size + posterPath
     const posterImage = posterPath ? <img src={imgSrc} alt="Image is not available" className="poster"/> :
                                      <img src={img_not_av} alt="Image is not available" className="poster"/>
 
     if(highlightButton) {
-      if(highlightButton == 'addToFavorites'){
-        animationFav = {animationName: 'highlight'}
-        animationWlater = {}
-      } else {
-        animationWlater = {animationName: 'highlight'}
-        animationFav = {}
-      }
-    } else {
-      animationFav = {}
-      animationWlater = {}
+      animationFav = highlightButton == 'addToFavorites'? {animationName: 'highlight'}:{}
+      animationWlater = highlightButton == 'addToFavorites'? {}:{animationName: 'highlight'}
     }
 
     return (
