@@ -93,8 +93,8 @@ describe('Movie rendering tests', () => {
     fireEvent.click(getByTestId('menu-button'))
     const topRatedLink = await waitFor(() => getByTestId('top-rated-link'))
     fireEvent.click(topRatedLink)
-    const movieTitle = await waitFor(() => getByTestId('movie-title'))
-    expect(movieTitle.innerHTML).toEqual('Top rated movie')
+    const movieTitle = getByTestId('movie-title')
+    waitFor(() => expect(movieTitle.innerHTML).toEqual('Top rated movie'))
   });
 
   it('Movie is rendered after click on Favorites', async () => {
@@ -111,8 +111,8 @@ describe('Movie rendering tests', () => {
     fireEvent.click(getByTestId('menu-button'))
     const favoritesLink = await waitFor(() => getByTestId('favorites-link'))
     fireEvent.click(favoritesLink)
-    const movieTitle = await waitFor(() => getByTestId('movie-title'))
-    expect(movieTitle.innerHTML).toEqual('Favorite movie')
+    const movieTitle = getByTestId('movie-title')
+    waitFor(() => expect(movieTitle.innerHTML).toEqual('Favorite movie'))
   });
 
   it('Movie is rendered after click on Watch later', async () => {
@@ -129,8 +129,8 @@ describe('Movie rendering tests', () => {
     fireEvent.click(getByTestId('menu-button'))
     const watchListLink = await waitFor(() => getByTestId('watchlist-link'))
     fireEvent.click(watchListLink)
-    const movieTitle = await waitFor(() => getByTestId('movie-title'))
-    expect(movieTitle.innerHTML).toEqual('Watch later movie')
+    const movieTitle = getByTestId('movie-title')
+    waitFor(() => expect(movieTitle.innerHTML).toEqual('Watch later movie'))
   });
 
   it('Movie is rendered after typing in search field', async () => {
@@ -151,9 +151,7 @@ describe('Movie rendering tests', () => {
     const searchInput = await waitFor(() => getByTestId('search-input'))
     fireEvent.keyPress(searchInput, { key: 'A', code: 'KeyA' })
     const container = getByTestId('movie-title')
-    waitFor({ container })
-      .then(() => expect(container.innerHTML).toEqual('Found movie'))
-      .catch(err => console.log(err))
+    waitFor(() => expect(container.innerHTML).toEqual('Found movie'))
   });
 });
 
@@ -161,8 +159,8 @@ describe('Main title tests', () => {
 
   it('Main title is rendered on page load', async () => {
     const { getByTestId } = render(<App />);
-    const title = await waitFor(() => getByTestId('main-title'))
-    expect(title.innerHTML).toEqual('Top Rated Movies')
+    const title = getByTestId('main-title')
+    waitFor(() => expect(title.innerHTML).toEqual('Top Rated Movies'))
   });
 
   it('Main title is rendered after click on Top rated', async () => {
@@ -170,8 +168,8 @@ describe('Main title tests', () => {
     fireEvent.click(getByTestId('menu-button'))
     const topRatedLink = await waitFor(() => getByTestId('top-rated-link'))
     fireEvent.click(topRatedLink)
-    const title = await waitFor(() => getByTestId('main-title'))
-    expect(title.innerHTML).toEqual('Top Rated Movies')
+    const title = getByTestId('main-title')
+    waitFor(() => expect(title.innerHTML).toEqual('Top Rated Movies'))
   });
 
   it('Main title is rendered after click on Favorites', async () => {
@@ -179,8 +177,8 @@ describe('Main title tests', () => {
     fireEvent.click(getByTestId('menu-button'))
     const favoritesLink = await waitFor(() => getByTestId('favorites-link'))
     fireEvent.click(favoritesLink)
-    const title = await waitFor(() => getByTestId('main-title'))
-    expect(title.innerHTML).toEqual('Favorite Movies')
+    const title = getByTestId('main-title')
+    waitFor(() => expect(title.innerHTML).toEqual('Favorite Movies'))
   });
 
   it('Main title is rendered after click on Watch later', async () => {
@@ -188,8 +186,8 @@ describe('Main title tests', () => {
     fireEvent.click(getByTestId('menu-button'))
     const watchListLink = await waitFor(() => getByTestId('watchlist-link'))
     fireEvent.click(watchListLink)
-    const title = await waitFor(() => getByTestId('main-title'))
-    expect(title.innerHTML).toEqual('Watch Later')
+    const title = getByTestId('main-title')
+    waitFor(() => expect(title.innerHTML).toEqual('Watch Later'))
   });
 
   it('Main title is rendered after typing in search field', async () => {
@@ -200,10 +198,8 @@ describe('Main title tests', () => {
     fireEvent.click(getByTestId('search-button'))
     const searchInput = await waitFor(() => getByTestId('search-input'))
     fireEvent.keyPress(searchInput, { key: 'A', code: 'KeyA' })
-    const container = getByTestId('main-title')
-    waitFor({ container })
-      .then(() => expect(container.innerHTML).toEqual('Search Result'))
-      .catch(err => console.log(err))
+    const title = getByTestId('main-title')
+    waitFor(() => expect(title.innerHTML).toEqual('Search Result'))
   });
 
 });
